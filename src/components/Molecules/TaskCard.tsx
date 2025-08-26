@@ -1,19 +1,19 @@
 "use client";
 import { useState } from "react";
 import { Task } from "@/types/task";
-import { useTasks } from "@/hooks/useTasks";
 import { Draggable } from "@hello-pangea/dnd";
 import { Modal } from "@/components/Organisms/Modal";
 import { AddTaskForm } from "@/components/Organisms/AddTaskForm";
+import type { Action } from "@/types/task";
 
 type Props = {
   task?: Task;
   isLoading?: boolean;
   index?: number;
+  dispatch: React.Dispatch<Action>;
 };
 
-export const TaskCard = ({ task, isLoading = false, index }: Props) => {
-  const { dispatch } = useTasks();
+export const TaskCard = ({ task, isLoading = false, index, dispatch }: Props) => {
   const [isConfirmOpen, setIsConfirmOpen] = useState(false);
   const [isEditOpen, setIsEditOpen] = useState(false);
 

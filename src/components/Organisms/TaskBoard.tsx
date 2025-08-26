@@ -38,12 +38,14 @@ export const TaskBoard = () => {
     );
   }
 
+  console.log("Tasks:", tasks);
+
   return (
     <DragDropContext onDragEnd={onDragEnd}>
       <div className="flex gap-6 flex-wrap p-8">
-        <Column title="Todo" tasks={todoTasks} isLoading={loading} />
-        <Column title="Doing" tasks={doingTasks} isLoading={loading} />
-        <Column title="Done" tasks={doneTasks} isLoading={loading} />
+        <Column title="Todo" tasks={todoTasks} isLoading={loading} dispatch={dispatch} />
+        <Column title="Doing" tasks={doingTasks} isLoading={loading} dispatch={dispatch} />
+        <Column title="Done" tasks={doneTasks} isLoading={loading} dispatch={dispatch} />
       </div>
     </DragDropContext>
   );

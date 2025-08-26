@@ -1,23 +1,12 @@
 "use client";
 import { useEffect, useReducer } from "react";
-import { Task } from "@/types/task";
+import { Task, Action } from "@/types/task";
 
 type State = {
   tasks: Task[];
   loading: boolean;
   error: Error | null;
 };
-
-import { TaskStatus } from "@/types/task";
-
-type Action =
-  | { type: "LOAD_START" }
-  | { type: "LOAD_SUCCESS"; payload: Task[] }
-  | { type: "LOAD_ERROR"; payload: Error }
-  | { type: "ADD_TASK"; payload: Task }
-  | { type: "UPDATE_TASK"; payload: Task }
-  | { type: "DELETE_TASK"; payload: { taskId: string } } // payload is task id
-  | { type: "MOVE_TASK"; payload: { taskId: string; destinationStatus: TaskStatus; destinationIndex: number } };
 
 const initialState: State = {
   tasks: [],
@@ -112,6 +101,12 @@ export const useTasks = (): State & { dispatch: React.Dispatch<Action> } => {
   useEffect(() => {
     console.log("状態が更新されました:", state);
   }, [state]);
+
+  useEffect(() => {
+    if (!state.loading && !state.error) {
+      localStorage.setItem("tasks", JSON.stringify(state.tasks));
+    }
+  }, [state.tasks, state.error, state.loading]);
 
   useEffect(() => {
     dispatch({ type: "LOAD_START" });

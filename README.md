@@ -1,36 +1,73 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# タスクボードアプリ（Task Board App）
 
-## Getting Started
+このアプリは、Next.js（App Router構成）を使って構築された、ドラッグ＆ドロップ対応のタスク管理アプリケーションです。状態はuseReducerで管理され、localStorageに永続化されます。
 
-First, run the development server:
+## 公開URL
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
+[Vercelでホスティング中のデモサイト](https://task-board-app-five.vercel.app/)
+（※実際のURLに差し替えてください）
+
+## 主な技術スタック
+
+- Next.js (App Router構成)
+- React + TypeScript
+- Tailwind CSS
+- useReducer + localStorage
+- @hello-pangea/dnd（ドラッグ＆ドロップ）
+
+## 主な機能
+
+- タスクの追加・編集・削除
+- タスクのステータス（Todo / Doing / Done）変更
+- カラム間のドラッグ＆ドロップ
+- localStorage による状態の保存
+- ローディング時のSkeleton UI表示
+
+## ディレクトリ構成（一部）
+
+```
+src/
+├── app/               // App Router用のルートディレクトリ
+├── components/        // Atomic Designに基づくUIコンポーネント
+├── hooks/             // カスタムフック（useTasksなど）
+├── lib/               // 汎用的な関数
+├── types/             // 型定義
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+## ▶開発環境での起動方法
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+リポジトリをclone後、該当ディレクトリで以下のコマンドを実行してください。
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+```bash
+yarn
+```
 
-## Learn More
+`http://localhost:3000` でアプリが確認できます。
 
-To learn more about Next.js, take a look at the following resources:
+## 開発用コマンド
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+依存パッケージをインストールした後、開発サーバーを起動します。
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+```bash
+yarn dev          # 開発サーバー起動
+```
 
-## Deploy on Vercel
+## 本番ビルド
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+```bash
+yarn build
+yarn start
+```
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+## デプロイ方法
+
+このアプリはVercelに連携されており、GitHubに `push` することで自動的にデプロイされます。  
+mainブランチは本番環境、その他のブランチはプレビューデプロイとして個別のURLで確認可能です。
+
+## ライセンス
+
+このリポジトリは MIT ライセンスのもとで公開されています。
+
+## 開発者
+
+- [otoiron](https://github.com/otoiron)

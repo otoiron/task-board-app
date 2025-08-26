@@ -21,15 +21,16 @@ export const Column = ({ title, tasks = [], isLoading = false }: Props) => {
       <h2 className="text-xl font-bold mb-4">{title}</h2>
       <Droppable droppableId={title.toLowerCase()}>
         {(provided) => (
-          <div
-            ref={provided.innerRef}
-            {...provided.droppableProps}
-          >
-            {isLoading
-              ? [...Array(3)].map((_, i) => <TaskCard key={i} isLoading />)
-              : tasks.map((task, index) => (
-                  <TaskCard key={task.id} task={task} index={index} />
-                ))}
+          <div ref={provided.innerRef} {...provided.droppableProps}>
+            {isLoading ? (
+              [...Array(3)].map((_, i) => <TaskCard key={i} isLoading />)
+            ) : tasks.length === 0 ? (
+              <p className="text-sm text-gray-500">タスクはありません</p>
+            ) : (
+              tasks.map((task, index) => (
+                <TaskCard key={task.id} task={task} index={index} />
+              ))
+            )}
             {provided.placeholder}
             {title === "Todo" && (
               <div className="mt-4">
@@ -38,7 +39,10 @@ export const Column = ({ title, tasks = [], isLoading = false }: Props) => {
                   onClick={() => setIsModalOpen(true)}
                 />
                 {isModalOpen && (
-                  <Modal isOpen={isModalOpen} onClose={() => setIsModalOpen(false)}>
+                  <Modal
+                    isOpen={isModalOpen}
+                    onClose={() => setIsModalOpen(false)}
+                  >
                     <AddTaskForm
                       onSubmit={(task) => {
                         dispatch({

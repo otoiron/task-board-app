@@ -1,7 +1,6 @@
 "use client";
 import { useEffect, useReducer } from "react";
 import { Task } from "@/types/task";
-import { loadTasks } from "@/lib/loadTasks";
 
 type State = {
   tasks: Task[];
@@ -116,12 +115,18 @@ export const useTasks = (): State & { dispatch: React.Dispatch<Action> } => {
 
   useEffect(() => {
     dispatch({ type: "LOAD_START" });
-    loadTasks()
-      .then((data) => dispatch({ type: "LOAD_SUCCESS", payload: data }))
-      .catch((error) => {
-        console.error("タスクの取得に失敗しました:", error);
-        dispatch({ type: "LOAD_ERROR", payload: error });
-      });
+    try {
+      const stored = localStorage.getItem("tasks");
+      if (stored) {
+        const parsed = JSON.parse(stored);
+        dispatch({ type: "LOAD_SUCCESS", payload: parsed });
+      } else {
+        dispatch({ type: "LOAD_SUCCESS", payload: [] });
+      }
+    } catch (error) {
+      console.error("localStorage 読み込み失敗:", error);
+      dispatch({ type: "LOAD_ERROR", payload: error as Error });
+    }
   }, []);
 
   return { ...state, dispatch };
